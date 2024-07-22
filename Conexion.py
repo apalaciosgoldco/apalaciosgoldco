@@ -180,6 +180,42 @@ def clear_product_table():
         if conn:
             conn.close()
 
+# Route to update a product in Snowflake
+@app.route('/updateProduct', methods=['PUT'])
+def update_product():
+    try:
+        conn = get_snowflake_connection()
+        cur = conn.cursor()
+
+        data = request.json
+        id_product = data.get('id_product')
+        product_name = data.get('product_name')
+        brand = data.get('brand')
+        height = data.get('height')
+        width = data.get('width')
+        depth = data.get('depth')
+        weight = data.get('weight')
+        package_type = data.get('package_type')
+        price = data.get('price')
+
+        update_command = f"""
+        UPDATE Product
+        SET PRODUCT_NAME='{product_name}', BRAND='{brand}', HEIGHT={height}, WIDTH={width}, DEPTH={depth}, WEIGHT={weight}, PACKAGE_TYPE='{package_type}', PRICE={price}
+        WHERE ID_PRODUCT='{id_product}';
+        """
+        cur.execute(update_command)
+        conn.commit()
+        logging.info(f"Product {id_product} updated")
+        return jsonify({'message': f"Product {id_product} updated"}), 200
+    except Exception as e:
+        logging.error(f"Error updating product: {e}")
+        return jsonify({'message': f"Error updating product: {e}"}), 500
+    finally:
+        if cur:
+            cur.close()
+        if conn:
+            conn.close()
+
 # Route to delete a product from Snowflake
 @app.route('/deleteProduct', methods=['POST'])
 def delete_product():
