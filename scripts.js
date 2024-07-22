@@ -19,7 +19,7 @@ function queryProducts() {
                     <td>${product.package_type}</td>
                     <td>${product.price}</td>
                 `;
-                const actionButtons = createActionButtons(product.id_product);
+                const actionButtons = createActionButtons(product.id_product, product);
                 const actionCell = document.createElement('td');
                 actionCell.appendChild(actionButtons);
                 row.appendChild(actionCell);
@@ -108,11 +108,11 @@ function hideAddProductForm() {
 }
 
 // Function to create action buttons for each row
-function createActionButtons(productId) {
+function createActionButtons(productId, product) {
     const editButton = document.createElement('button');
     editButton.textContent = 'Edit';
     editButton.className = 'edit';
-    editButton.onclick = () => showEditProductForm(productId);
+    editButton.onclick = () => showEditProductForm(product);
 
     const deleteButton = document.createElement('button');
     deleteButton.textContent = 'Delete';
@@ -128,8 +128,52 @@ function createActionButtons(productId) {
 }
 
 // Function to show edit product form
-function showEditProductForm(productId) {
-    // Logic to populate and show edit form (you'll need to create this form)
+function showEditProductForm(product) {
+    document.getElementById('edit_id_product').value = product.id_product;
+    document.getElementById('edit_product_name').value = product.product_name;
+    document.getElementById('edit_brand').value = product.brand;
+    document.getElementById('edit_height').value = product.height;
+    document.getElementById('edit_width').value = product.width;
+    document.getElementById('edit_depth').value = product.depth;
+    document.getElementById('edit_weight').value = product.weight;
+    document.getElementById('edit_package_type').value = product.package_type;
+    document.getElementById('edit_price').value = product.price;
+
+    document.getElementById('editProductModal').style.display = 'block';
+}
+
+function hideEditProductForm() {
+    document.getElementById('editProductModal').style.display = 'none';
+    document.getElementById('editProductForm').reset(); // Reset the form fields
+}
+
+document.getElementById('editProductForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    const id_product = document.getElementById('edit_id_product').value;
+    const product_name = document.getElementById('edit_product_name').value;
+    const brand = document.getElementById('edit_brand').value;
+    const height = parseFloat(document.getElementById('edit_height').value);
+    const width = parseFloat(document.getElementById('edit_width').value);
+    const depth = parseFloat(document.getElementById('edit_depth').value);
+    const weight = parseFloat(document.getElementById('edit_weight').value);
+    const package_type = document.getElementById('edit_package_type').value;
+    const price = parseFloat(document.getElementById('edit_price').value);
+
+    fetch(`${apiUrl}/updateProduct`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id_product, product_name, brand, height, width, depth, weight, package_type, price }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        alert(data.message);
+        hideEditProductForm();
+        queryProducts(); // Refresh product list
+    })
+    .catch(error => console.error('Error updating product:', error));
 }
 
 // Function to handle product deletion
