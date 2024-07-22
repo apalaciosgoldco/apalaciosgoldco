@@ -1,4 +1,4 @@
-const apiUrl = 'https://gfbackend.onrender.com'; // Updated URL
+const apiUrl = 'https://gfbackend-1o5e.onrender.com'; // Updated URL
 
 function queryProducts() {
     fetch(`${apiUrl}/queryProducts`)
