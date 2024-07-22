@@ -180,6 +180,30 @@ def clear_product_table():
         if conn:
             conn.close()
 
+# Route to delete a product from Snowflake
+@app.route('/deleteProduct', methods=['POST'])
+def delete_product():
+    try:
+        conn = get_snowflake_connection()
+        cur = conn.cursor()
+
+        data = request.json
+        id_product = data.get('id_product')
+
+        delete_command = f"DELETE FROM Product WHERE ID_PRODUCT = '{id_product}';"
+        cur.execute(delete_command)
+        conn.commit()
+        logging.info(f"Product with ID {id_product} deleted from the Product table")
+        return jsonify({'message': f"Product with ID {id_product} deleted from the Product table"}), 200
+    except Exception as e:
+        logging.error(f"Error deleting product: {e}")
+        return jsonify({'message': f"Error deleting product: {e}"}), 500
+    finally:
+        if cur:
+            cur.close()
+        if conn:
+            conn.close()
+
 # Close the cursor and connection
 @app.teardown_appcontext
 def close_connection(exception):
