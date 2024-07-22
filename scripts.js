@@ -19,6 +19,10 @@ function queryProducts() {
                     <td>${product.package_type}</td>
                     <td>${product.price}</td>
                 `;
+                const actionButtons = createActionButtons(product.id_product);
+                const actionCell = document.createElement('td');
+                actionCell.appendChild(actionButtons);
+                row.appendChild(actionCell);
                 tableBody.appendChild(row);
             });
         })
@@ -101,6 +105,48 @@ function showAddProductForm() {
 function hideAddProductForm() {
     document.getElementById('addProductModal').style.display = 'none';
     document.getElementById('addProductForm').reset(); // Clear form fields when hiding the modal
+}
+
+// Function to create action buttons for each row
+function createActionButtons(productId) {
+    const editButton = document.createElement('button');
+    editButton.textContent = 'Edit';
+    editButton.className = 'edit';
+    editButton.onclick = () => showEditProductForm(productId);
+
+    const deleteButton = document.createElement('button');
+    deleteButton.textContent = 'Delete';
+    deleteButton.className = 'delete';
+    deleteButton.onclick = () => deleteProduct(productId);
+
+    const actionContainer = document.createElement('div');
+    actionContainer.className = 'action-buttons';
+    actionContainer.appendChild(editButton);
+    actionContainer.appendChild(deleteButton);
+
+    return actionContainer;
+}
+
+// Function to show edit product form
+function showEditProductForm(productId) {
+    // Logic to populate and show edit form (you'll need to create this form)
+}
+
+// Function to handle product deletion
+function deleteProduct(productId) {
+    fetch(`${apiUrl}/deleteProduct`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id_product: productId }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        alert(data.message);
+        queryProducts(); // Refresh product list
+    })
+    .catch(error => console.error('Error deleting product:', error));
 }
 
 document.addEventListener('DOMContentLoaded', function() {
