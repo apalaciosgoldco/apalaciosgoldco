@@ -131,3 +131,35 @@ button[type="button"] {
 button[type="button"]:hover {
     background-color: #e41e26;
 }
+
+.action-buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+button.edit,
+button.delete {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9em;
+}
+
+button.edit {
+    background-color: #ffa500; /* Orange for edit */
+    color: white;
+}
+
+button.edit:hover {
+    background-color: #ff8c00;
+}
+
+button.delete {
+    background-color: #f44336; /* Red for delete */
+    color: white;
+}
+
+button.delete:hover {
+    background-color: #e41e26;
+}
