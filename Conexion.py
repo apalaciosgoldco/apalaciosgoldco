@@ -180,6 +180,43 @@ def clear_product_table():
         if conn:
             conn.close()
 
+# Route to get a product by ID
+@app.route('/getProduct', methods=['GET'])
+def get_product():
+    try:
+        id_product = request.args.get('id_product')
+        if not id_product:
+            return jsonify({'message': 'No product ID provided'}), 400
+
+        conn = get_snowflake_connection()
+        cur = conn.cursor()
+
+        cur.execute("SELECT * FROM Product WHERE ID_PRODUCT = %s;", (id_product,))
+        result = cur.fetchone()
+        if result:
+            product_data = {
+                'id_product': result[0],
+                'product_name': result[1],
+                'brand': result[2],
+                'height': result[3],
+                'width': result[4],
+                'depth': result[5],
+                'weight': result[6],
+                'package_type': result[7],
+                'price': result[8]
+            }
+            return jsonify(product_data), 200
+        else:
+            return jsonify({'message': 'Product not found'}), 404
+    except Exception as e:
+        logging.error(f"Error fetching product details: {e}")
+        return jsonify({'message': f"Error fetching product details: {e}"}), 500
+    finally:
+        if cur:
+            cur.close()
+        if conn:
+            conn.close()
+
 # Route to update a product in Snowflake
 @app.route('/updateProduct', methods=['PUT'])
 def update_product():
