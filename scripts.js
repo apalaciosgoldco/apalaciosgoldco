@@ -234,19 +234,22 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Event listener for show upload form button
-    document.getElementById('showUploadFormBtn').addEventListener('click', function() {
+    document.getElementById('showUploadFormBtn')?.addEventListener('click', function() {
         showUploadForm();
     });
 
     // Event listener for close upload form button
-    document.getElementById('closeUploadFormBtn').addEventListener('click', function() {
+    document.getElementById('closeUploadFormBtn')?.addEventListener('click', function() {
         hideUploadForm();
     });
 
     // Event listener for show add product form button
-    document.getElementById('showAddProductFormBtn').addEventListener('click', function() {
+    document.getElementById('showAddProductFormBtn')?.addEventListener('click', function() {
         showAddProductForm();
     });
 
     // Event listener for close add product form button
-    document.getElementById('closeAddProductFormBtn').addEvent
+    document.getElementById('closeAddProductFormBtn')?.addEventListener('click', function() {
+        hideAddProductForm();
+    });
+});
