@@ -10,11 +10,11 @@
     <div class="sidebar">
         <h2>Menu</h2>
         <button onclick="queryProducts()">Query Products</button>
-        <button onclick="showUploadForm()">Upload to Stage</button>
+        <button id="showUploadFormBtn">Upload to Stage</button>
         <button onclick="executeTask()">Execute Task</button>
         <button onclick="clearProductStages()">Clear Product Stages</button>
         <button onclick="truncateProductTable()">Truncate Product Table</button>
-        <button onclick="showAddProductForm()">Add Product</button>
+        <button id="showAddProductFormBtn">Add Product</button>
     </div>
     <div class="content">
         <h1>Products</h1>
@@ -40,7 +40,7 @@
     <!-- Upload Form Modal -->
     <div id="uploadForm" class="modal" style="display:none;">
         <div class="modal-content">
-            <span class="close" onclick="hideUploadForm()">&times;</span>
+            <span class="close" id="closeUploadFormBtn">&times;</span>
             <h2>Upload File to Stage</h2>
             <form id="uploadFileForm" enctype="multipart/form-data" onsubmit="event.preventDefault(); uploadFile();">
                 <input type="file" id="file-input">
