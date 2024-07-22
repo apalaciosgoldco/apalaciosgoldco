@@ -139,8 +139,8 @@ function editProduct(event) {
     const package_type = document.getElementById('edit_package_type').value;
     const price = parseFloat(document.getElementById('edit_price').value);
 
-    fetch(`${apiUrl}/editProduct`, {
-        method: 'POST',
+    fetch(`${apiUrl}/updateProduct`, {
+        method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
         },
@@ -162,7 +162,12 @@ function createActionButtons(productId) {
     editButton.onclick = () => {
         // Fetch product details and then show edit form
         fetch(`${apiUrl}/getProduct?id_product=${productId}`)
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
             .then(product => showEditProductForm(product))
             .catch(error => console.error('Error fetching product details:', error));
     };
