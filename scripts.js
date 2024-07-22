@@ -174,7 +174,7 @@ document.getElementById('editProductForm').addEventListener('submit', function(e
         queryProducts(); // Refresh product list
     })
     .catch(error => console.error('Error updating product:', error));
-}
+});
 
 // Function to handle product deletion
 function deleteProduct(productId) {
