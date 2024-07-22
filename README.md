@@ -1,133 +1,142 @@
-# Product Management App - Version 0.3
+# Product Management Application
 
-## Overview
+This project is a web-based product management application that allows users to manage product data in a Snowflake database. The application provides functionalities for querying products, uploading files, executing tasks, clearing stages, truncating tables, and adding, editing, and deleting products.
 
-Welcome to the Product Management App, Version 0.3. This application is designed to provide a comprehensive environment for managing products, stores, and sales data. In this version, we have validated and included various functionalities to interact with the `Product` table in Snowflake. The core features include querying data, uploading flat files, executing tasks, and managing product data.
+## Table of Contents
+
+- [Features](#features)
+- [Technologies Used](#technologies-used)
+- [Setup and Installation](#setup-and-installation)
+- [Usage](#usage)
+- [API Endpoints](#api-endpoints)
+- [Contributing](#contributing)
+- [License](#license)
 
 ## Features
 
-1. **Query Products**: Retrieve and display data from the `Product` table.
-2. **Upload Flat Files to Stage**: Upload files to a Snowflake stage for further processing.
-3. **Execute Bulk Load Task**: Execute the `BULK_LOAD_PRODUCTS` task to process data.
-4. **Clear Product Stages**: Clear data from product stages.
-5. **Truncate Product Table**: Clear all data from the `Product` table.
-6. **Add Products**: Add new product entries to the `Product` table.
+- **Query Products**: Fetch and display product data from the Snowflake database.
+- **Upload Files**: Upload files to Snowflake stages for data loading.
+- **Execute Task**: Trigger Snowflake tasks to process data.
+- **Clear Product Stages**: Remove files from Snowflake stages.
+- **Truncate Product Table**: Clear all data from the product table.
+- **Add Product**: Add new product entries to the database.
+- **Edit Product**: Update existing product details (coming soon).
+- **Delete Product**: Remove product entries from the database.
 
-## Environment Setup
+## Technologies Used
 
-This environment is designed for managing three main tables:
-- `Product`
-- `Store`
-- `Sales`
+- **Frontend**: HTML, CSS, JavaScript
+- **Backend**: Python (Flask)
+- **Database**: Snowflake
+- **APIs**: Fetch API for frontend-backend communication
 
-Each table will have corresponding functions and endpoints to interact with the data effectively.
+## Setup and Installation
 
-## Prerequisites
+### Prerequisites
 
-Ensure you have the following software installed:
 - Python 3.x
+- Node.js and npm
 - Snowflake account
-- Flask
-- Visual Studio Code (optional, but recommended)
-- Git
 
-## Installation
+### Backend Setup
 
-1. Clone the repository:
+1. **Clone the repository**:
 
     ```bash
-    git clone https://github.com/yourusername/product-management-app.git
+    git clone https://github.com/your-repo/product-management-app.git
     cd product-management-app
     ```
 
-2. Create and activate a virtual environment:
+2. **Create a virtual environment and activate it**:
 
     ```bash
     python -m venv venv
-    source venv/bin/activate  # On Windows, use `venv\Scripts\activate`
+    source venv/bin/activate  # On Windows use `venv\Scripts\activate`
     ```
 
-3. Install the required packages:
+3. **Install dependencies**:
 
     ```bash
     pip install -r requirements.txt
     ```
 
-4. Set up environment variables for Snowflake configuration. Create a `.env` file in the project root with the following content:
+4. **Set up environment variables**:
 
-    ```plaintext
-    SNOWFLAKE_USER=your_user
-    SNOWFLAKE_PASSWORD=your_password
-    SNOWFLAKE_ACCOUNT=your_account
-    SNOWFLAKE_WAREHOUSE=your_warehouse
-    SNOWFLAKE_DATABASE=your_database
-    SNOWFLAKE_SCHEMA=your_schema
-    SNOWFLAKE_ROLE=your_role
+    Create a `.env` file in the root directory with the following content:
+
+    ```env
+    SNOWFLAKE_USER=<your_snowflake_user>
+    SNOWFLAKE_PASSWORD=<your_snowflake_password>
+    SNOWFLAKE_ACCOUNT=<your_snowflake_account>
+    SNOWFLAKE_WAREHOUSE=<your_snowflake_warehouse>
+    SNOWFLAKE_DATABASE=<your_snowflake_database>
+    SNOWFLAKE_SCHEMA=<your_snowflake_schema>
+    SNOWFLAKE_ROLE=<your_snowflake_role>
     ```
 
-## Running the Application
-
-1. Start the Flask application:
+5. **Run the Flask application**:
 
     ```bash
-    ./start.sh
+    python app.py
     ```
 
-2. Open your web browser and navigate to `http://localhost:8000` (or the URL provided by your deployment platform).
+### Frontend Setup
+
+1. **Navigate to the `frontend` directory**:
+
+    ```bash
+    cd frontend
+    ```
+
+2. **Install dependencies**:
+
+    ```bash
+    npm install
+    ```
+
+3. **Run the application**:
+
+    ```bash
+    npm start
+    ```
 
 ## Usage
 
-### Query Products
+1. **Open the application in your browser**:
 
-To query products, click on the "Query Products" button in the sidebar. This will retrieve and display the data from the `Product` table.
+    Navigate to `http://localhost:5000` to access the application.
 
-### Upload to Stage
+2. **Use the sidebar buttons**:
 
-To upload a flat file to the Snowflake stage:
-1. Click on the "Upload to Stage" button in the sidebar.
-2. Select the file you want to upload.
-3. Click the "Upload" button.
+    - **Query Products**: View a list of products from the database.
+    - **Upload to Stage**: Upload a file to a Snowflake stage.
+    - **Execute Task**: Trigger a Snowflake task.
+    - **Clear Product Stages**: Remove all files from Snowflake stages.
+    - **Truncate Product Table**: Clear all data from the product table.
+    - **Add Product**: Open the form to add a new product.
 
-### Execute Task
+3. **Perform CRUD operations**:
 
-To execute the `BULK_LOAD_PRODUCTS` task:
-1. Click on the "Execute Task" button in the sidebar.
-2. The task will be executed, and the data will be processed.
+    Use the "Edit" and "Delete" buttons in the product table rows to manage products.
 
-### Clear Product Stages
+## API Endpoints
 
-To clear the product stages:
-1. Click on the "Clear Product Stages" button in the sidebar.
-2. The stages will be cleared.
+- `POST /uploadToStage`: Upload a file to Snowflake stage.
+- `POST /executeTask`: Execute a Snowflake task.
+- `GET /queryProducts`: Retrieve product data from the database.
+- `POST /addProduct`: Add a new product to the database.
+- `POST /deleteProduct`: Delete a product from the database.
+- `POST /clearProductStages`: Clear all Snowflake stages.
+- `POST /truncateProductTable`: Truncate the product table.
 
-### Truncate Product Table
+## Contributing
 
-To truncate the `Product` table:
-1. Click on the "Truncate Product Table" button in the sidebar.
-2. The table will be truncated, removing all data.
-
-### Add Products
-
-To add a new product:
-1. Click on the "Add Product" button in the sidebar.
-2. Fill in the product details in the form.
-3. Click the "Add Product" button to save the product.
-
-## Future Plans
-
-In the upcoming versions, we plan to:
-- Add functionality to manage `Store` and `Sales` tables.
-- Improve the user interface for better user experience.
-- Add authentication and authorization features to secure the application.
-
-## Contribution
-
-Contributions are welcome! Please fork the repository and create a pull request with your changes.
+Feel free to fork the repository and submit pull requests. For major changes or features, please open an issue to discuss your ideas.
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ---
 
-Thank you for using the Product Management App. If you have any questions or need further assistance, please feel free to contact us.
+Feel free to adjust any sections to better fit your project’s specifics!
